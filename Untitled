@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------------------
+# Next.js app environment (mirrors the previous Django settings)
+# Copy to `.env.local` and fill in real values. Never commit secrets.
+# ---------------------------------------------------------------------------
+
+# ---- Frontend ----
+# Leave empty so the browser calls same-origin /api/* routes.
+NEXT_PUBLIC_API_BASE_URL=
+
+# ---- Firebase (Firestore) ----
+# Path to the Firebase service account JSON (metadata/auth/analytics DB).
+FIREBASE_CREDENTIALS_PATH=C:\Users\PC\OneDrive - ACME ONE\Desktop\Chatbot-Backend\acme-one-chatbot-firebase-adminsdk-fbsvc-def9733648.json
+# Alternatively GOOGLE_APPLICATION_CREDENTIALS is also honored.
+# GOOGLE_APPLICATION_CREDENTIALS=./serviceAccount.json
+
+# ---- Qdrant (vector DB) ----
+QDRANT_URL=http://localhost:6333
+QDRANT_API_KEY=
+QDRANT_TIMEOUT_SEC=120
+QDRANT_COLLECTION_NAME=documents
+QDRANT_VECTOR_SIZE=1536
+QDRANT_VECTOR_NAME=
+QDRANT_AUTO_RECREATE_ON_DIMENSION_MISMATCH=false
+QDRANT_UPSERT_BATCH_SIZE=64
+QDRANT_UPSERT_RETRIES=3
+QDRANT_UPSERT_RETRY_BACKOFF_SEC=1.0
+
+# ---- OpenRouter / LLM (embeddings + chat) ----
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+OPENROUTER_REFERER=http://localhost:3000
+OPENROUTER_TITLE=chatbot-backend
+OPENROUTER_CHAT_MODEL=google/gemini-2.5-flash
+OPENROUTER_EMBEDDING_MODEL=openai/text-embedding-3-small
+OPENROUTER_MAX_OUTPUT_TOKENS=1024
+OPENROUTER_TEMPERATURE=0.3
+OPENROUTER_HTTP_TIMEOUT_SEC=120
+OPENROUTER_EMBEDDING_TIMEOUT_SEC=180
+OPENROUTER_EMBEDDING_MAX_RETRIES=6
+OPENROUTER_MAX_CONTINUATIONS=1
+OPENROUTER_SUMMARY_MODEL=
+OPENROUTER_SUMMARY_MAX_OUTPUT_TOKENS=384
+
+# ---- RAG tuning ----
+RAG_TOP_K=6
+RAG_SIMILARITY_THRESHOLD=0.15
+RAG_MAX_CONTEXT_TOKENS=3200
+RAG_CANDIDATE_MULTIPLIER=2
+RAG_LLM_FOCUSED_CONTEXT_CHUNKS=5
+RAG_LLM_POST_SUMMARY=false
+RAG_SUMMARIZE_MIN_INPUT_CHARS=200
+RAG_STRICT_MAX_SENTENCES=5
+RAG_INGEST_CHUNK_SIZE_TOKENS=420
+RAG_INGEST_CHUNK_OVERLAP_TOKENS=80
+EMBEDDING_BATCH_SIZE=64
+
+# ---- Auth / JWT ----
+JWT_SECRET_KEY=change-me-in-production
+JWT_ALGORITHM=HS256
+JWT_ACCESS_TOKEN_LIFETIME_MIN=15
+JWT_REFRESH_TOKEN_LIFETIME_DAYS=7
+
+# ---- Email (SMTP) ----
+EMAIL_HOST=
+EMAIL_PORT=587
+EMAIL_HOST_USER=
+EMAIL_HOST_PASSWORD=
+EMAIL_USE_TLS=true
+DEFAULT_FROM_EMAIL=
+
+# ---- Plans / limits ----
+FREE_PLAN_MAX_BOTS=1
+PAID_PLAN_MAX_BOTS=10
+SUPER_ADMIN_DASHBOARD_CACHE_TTL_SECONDS=20
