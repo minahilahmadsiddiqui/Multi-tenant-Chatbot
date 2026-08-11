@@ -67,6 +67,8 @@ export const env = {
   JWT_REFRESH_TOKEN_LIFETIME_DAYS: num("JWT_REFRESH_TOKEN_LIFETIME_DAYS", 7),
 
   // Firebase
+  // Prefer inline JSON/base64 on hosts like Vercel (no secret file on disk).
+  FIREBASE_SERVICE_ACCOUNT_JSON: str("FIREBASE_SERVICE_ACCOUNT_JSON"),
   FIREBASE_CREDENTIALS_PATH: str("FIREBASE_CREDENTIALS_PATH") || str("GOOGLE_APPLICATION_CREDENTIALS"),
 
   // Email (SMTP)

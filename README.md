@@ -73,6 +73,8 @@ Used for companies, admins, bots, documents metadata, chat audit, and analytics.
 
    Use your actual filename if different. Path is relative to the `web/` directory (where you run `npm`).
 
+6. On Vercel (or any host without a secrets file), do **not** set `FIREBASE_CREDENTIALS_PATH`. Instead set `FIREBASE_SERVICE_ACCOUNT_JSON` to the service account JSON (one line) or the base64 of that file.
+
 **Security:** never commit the service account JSON or `.env` to git.
 
 ---
@@ -178,7 +180,8 @@ Copy `.env.example` → `.env` (or `.env.local`) and fill values. Variables are 
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `FIREBASE_CREDENTIALS_PATH` | **Yes** | — | Path to service account JSON (e.g. `./secrets/firebase-adminsdk.json`). |
+| `FIREBASE_SERVICE_ACCOUNT_JSON` | **Yes on Vercel** | — | Service account JSON (minified one line) or base64 of the JSON file. Preferred on hosts with no disk secrets. |
+| `FIREBASE_CREDENTIALS_PATH` | **Yes locally** | — | Path to service account JSON (e.g. `./secrets/firebase-adminsdk.json`). Unused if `FIREBASE_SERVICE_ACCOUNT_JSON` is set. |
 | `GOOGLE_APPLICATION_CREDENTIALS` | No | — | Alternate path; used if `FIREBASE_CREDENTIALS_PATH` is empty. |
 
 ### Qdrant
@@ -279,7 +282,7 @@ Copy `.env.example` → `.env` (or `.env.local`) and fill values. Variables are 
 Deploy the `web/` folder (set host **Root Directory** to `web` if your repo has a parent folder).
 
 1. Set the same environment variables as in `.env` on the host.
-2. Make the Firebase JSON available on the server and set `FIREBASE_CREDENTIALS_PATH` to that path.
+2. For Firebase on Vercel: set `FIREBASE_SERVICE_ACCOUNT_JSON` (JSON one-liner or base64). Do **not** set `FIREBASE_CREDENTIALS_PATH`.
 3. Set `JWT_SECRET_KEY` to a strong production value.
 4. Set `OPENROUTER_REFERER` to your production URL.
 5. Leave `NEXT_PUBLIC_API_BASE_URL` empty if UI and API share the same domain.
@@ -331,7 +334,7 @@ web/
 
 | Problem | What to check |
 |---------|----------------|
-| Firestore / auth errors | `FIREBASE_CREDENTIALS_PATH` exists and is readable from `web/`; JSON is a valid service account. |
+| Firestore / auth errors | Locally: `FIREBASE_CREDENTIALS_PATH` is readable. On Vercel: `FIREBASE_SERVICE_ACCOUNT_JSON` is valid JSON or base64 of the service account. |
 | Qdrant connection failed | `QDRANT_URL`, `QDRANT_API_KEY`; run `npm run qdrant:check`. |
 | Ingest fails / dim mismatch | `QDRANT_VECTOR_SIZE` matches embedding model; use a fresh collection name if size changed. |
 | Named vector errors | Set `QDRANT_VECTOR_NAME` to the name shown in Qdrant Cloud UI. |
